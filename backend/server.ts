@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import authRoutes from './routes/authroutes';  // Import the routes
+import blogroutes from'./routes/blogroute';
 import { sequelize } from './models'; // Assuming sequelize is initialized here
 import initUserModel from './models/user';
 import dotenv from 'dotenv';
@@ -17,6 +18,7 @@ initUserModel(sequelize);
 
 // Use authRoutes for authentication-related API calls
 app.use('/auth', authRoutes);  // Prefix with /api/auth (e.g., /api/auth/register, /api/auth/login)
+app.use('/blog',blogroutes);
 
 // Start the server
 const PORT = process.env.PORT || 5001;
