@@ -5,11 +5,18 @@ import blogroutes from'./routes/blogroute';
 import { sequelize } from './models'; // Assuming sequelize is initialized here
 import initUserModel from './models/user';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
-// Load environment variables
-dotenv.config();
+
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173', // Change this to match your frontend port
+  credentials: true
+}));
+// Load environment variables
+dotenv.config();
 
 // Middleware
 app.use(bodyParser.json()); // Or use express.json()
@@ -17,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 initUserModel(sequelize);
 
 // Use authRoutes for authentication-related API calls
-app.use('/auth', authRoutes);  // Prefix with /api/auth (e.g., /api/auth/register, /api/auth/login)
+app.use('/auth', authRoutes);  
 app.use('/blog',blogroutes);
 
 // Start the server
